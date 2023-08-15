@@ -2,9 +2,9 @@ use image;
 use nalgebra_glm::*;
 
 fn main() {
-    let image = image::open("./input.png").unwrap().to_rgba8();
+    let mut img = image::open("./input.png").unwrap().to_rgba8();
 
-    for mut pixel in image.pixels() {
+    img.pixels_mut().for_each(|pixel| {
         let mut color = vec3(pixel[0] as f64, pixel[1] as f64, pixel[2] as f64);
         // color *= mix(
         //     &vec3(1.0, 1.0, 1.0),
@@ -21,11 +21,10 @@ fn main() {
 
         let out = vec4(color[0], color[1], color[2], pixel[3] as f64);
 
-        pixel[0] = out[0] as u8;
-        pixel[1] = out[1] as u8;
-        pixel[2] = out[2] as u8;
-        pixel[3] = out[3] as u8;
-    }
+        pixel.0 = image::Rgba([out[0] as u8, out[0] as u8, out[0] as u8, out[0] as u8]).0;
+    });
+
+    img.save("out.png").unwrap();
 }
 
 fn color_temp_to_rgb(temperature: f64) {
@@ -41,11 +40,11 @@ fn color_temp_to_rgb(temperature: f64) {
         1.8993753891711275,
     );
 
-    nalgebra::Matrix1x3::<u64>::zeros() / nalgebra::Matrix3x1::<u64>::zeros();
+    // nalgebra::Matrix1x3::<u64>::zeros() / nalgebra::Matrix3x1::<u64>::zeros();
 
     let a = clamp_scalar(temperature, 1000.0, 40000.0);
     let b = vec3(a, a, a);
-    let c =
-        mat3(m[0], m[0], m[0], m[0], m[0], m[0], m[0], m[0], m[0]) / (b + vec3(m[1], m[1], m[1]));
-    let d = c + vec3(m[2], m[2], m[2]);
+    // let c =
+    //     mat3(m[0], m[0], m[0], m[0], m[0], m[0], m[0], m[0], m[0]) / (b + vec3(m[1], m[1], m[1]));
+    // let d = c + vec3(m[2], m[2], m[2]);
 }
