@@ -13,10 +13,9 @@ fn main() {
 
 fn glsl_main(pixel: Rgba<u8>) -> Rgba<u8> {
     let mut color = vec3(pixel[0] as f64 / 255.0, pixel[1] as f64 / 255.0, pixel[2] as f64 / 255.0);
+    println!("{:?}", color);
 
-    let a = mat3(
-        color.x, color.y, color.z, color.x, color.y, color.z, color.x, color.y, color.z,
-    ) * color_temp_to_rgb(4000.0);
+    let a = color.component_mul(&color_temp_to_rgb(4000.0));
     color = mix(&color, &a, 1.0);
 
     let out = vec4(
@@ -26,7 +25,7 @@ fn glsl_main(pixel: Rgba<u8>) -> Rgba<u8> {
         pixel[3] as f64,
     );
 
-    // println!("{:?}", out);
+    println!("{:?}", out);
 
     image::Rgba([out.x as u8, out.y as u8, out.z as u8, 255])
 }
