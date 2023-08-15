@@ -1,5 +1,5 @@
 use clap::Parser;
-use image::{self, Rgba};
+use image;
 use nalgebra_glm::*;
 
 #[derive(Debug, Parser)]
@@ -23,7 +23,7 @@ fn main() {
     img.save(args.output).unwrap();
 }
 
-fn glsl_main(pixel: Rgba<u8>) -> Rgba<u8> {
+fn glsl_main(pixel: image::Rgba<u8>) -> image::Rgba<u8> {
     let mut color = vec3(
         pixel[0] as f64 / 255.0,
         pixel[1] as f64 / 255.0,

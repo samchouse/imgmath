@@ -155,7 +155,7 @@ dependencies = [
  "heck",
  "proc-macro2",
  "quote",
- "syn 2.0.28",
+ "syn",
 ]
 
 [[package]]
@@ -390,7 +390,6 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "image",
- "nalgebra",
  "nalgebra-glm",
 ]
 
@@ -494,7 +493,6 @@ checksum = "307ed9b18cc2423f29e83f84fd23a8e73628727990181f18641a8b5dc2ab1caa"
 dependencies = [
  "approx",
  "matrixmultiply",
- "nalgebra-macros",
  "num-complex",
  "num-rational",
  "num-traits",
@@ -512,17 +510,6 @@ dependencies = [
  "nalgebra",
  "num-traits",
  "simba",
-]
-
-[[package]]
-name = "nalgebra-macros"
-version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "91761aed67d03ad966ef783ae962ef9bbaca728d2dd7ceb7939ec110fffad998"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 1.0.109",
 ]
 
 [[package]]
@@ -612,7 +599,7 @@ checksum = "4359fd9c9171ec6e8c62926d6faaf553a8dc3f64e1507e76da7911b4f6a04405"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.28",
+ "syn",
 ]
 
 [[package]]
@@ -753,17 +740,6 @@ checksum = "73473c0e59e6d5812c5dfe2a064a6444949f089e20eec9a2e5506596494e4623"
 
 [[package]]
 name = "syn"
-version = "1.0.109"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "72b64191b275b66ffe2469e8af2c1cfe3bafa67b529ead792a6d0160888b4237"
-dependencies = [
- "proc-macro2",
- "quote",
- "unicode-ident",
-]
-
-[[package]]
-name = "syn"
 version = "2.0.28"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "04361975b3f5e348b2189d8dc55bc942f278b2d482a6a0365de5bdd62d351567"
@@ -829,7 +805,7 @@ dependencies = [
  "once_cell",
  "proc-macro2",
  "quote",
- "syn 2.0.28",
+ "syn",
  "wasm-bindgen-shared",
 ]
 
@@ -851,7 +827,7 @@ checksum = "54681b18a46765f095758388f2d0cf16eb8d4169b639ab575a8f5693af210c7b"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.28",
+ "syn",
  "wasm-bindgen-backend",
  "wasm-bindgen-shared",
 ]
