@@ -18,7 +18,13 @@ fn main() {
         // );
 
         color = mix(&color, &color, 1.0);
+
         let out = vec4(color[0], color[1], color[2], pixel[3] as f64);
+
+        pixel[0] = out[0] as u8;
+        pixel[1] = out[1] as u8;
+        pixel[2] = out[2] as u8;
+        pixel[3] = out[3] as u8;
     }
 }
 
