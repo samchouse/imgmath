@@ -1,14 +1,26 @@
+use clap::Parser;
 use image::{self, Rgba};
 use nalgebra_glm::*;
 
-fn main() {
-    let mut img = image::open("./input.png").unwrap().to_rgba8();
+#[derive(Debug, Parser)]
+#[command(version, about)]
+struct Cli {
+    /// Path to input file
+    #[arg(short, long)]
+    input: String,
+    /// Path to output file
+    #[arg(short, long)]
+    output: String,
+}
 
+fn main() {
+    let args = Cli::parse();
+
+    let mut img = image::open(args.input).unwrap().to_rgba8();
     img.pixels_mut().for_each(|pixel| {
         *pixel = glsl_main(*pixel);
     });
-
-    img.save("out.png").unwrap();
+    img.save(args.output).unwrap();
 }
 
 fn glsl_main(pixel: Rgba<u8>) -> Rgba<u8> {
@@ -17,32 +29,14 @@ fn glsl_main(pixel: Rgba<u8>) -> Rgba<u8> {
         pixel[1] as f64 / 255.0,
         pixel[2] as f64 / 255.0,
     );
+    color = color.component_div(&color_temp_to_rgb(4000.0));
 
-    let a = color.component_div(&color_temp_to_rgb(4000.0));
-    // color = mix(&color, &a, 1.0);
-
-    // let colora = mix(&a, &color, 1.0);
-    // colora.
-
-    // // println!();
-    // // println!("{:?}", a);
-    // // println!("{:?}", colora);
-    // // println!("{:?}", colorb);
-    // // println!();
-
-    // if a != colora {
-    //     println!("a != colora");
-    // };
-
-
-    let out = vec4(
-        color.x * 255.0,
-        color.y * 255.0,
-        color.z * 255.0,
-        pixel[3] as f64,
-    );
-
-    image::Rgba([out.x as u8, out.y as u8, out.z as u8, 255])
+    image::Rgba([
+        (color.x * 255.0) as u8,
+        (color.y * 255.0) as u8,
+        (color.z * 255.0) as u8,
+        pixel[3],
+    ])
 }
 
 fn color_temp_to_rgb(temperature: f64) -> TVec3<f64> {
