@@ -12,7 +12,7 @@ fn main() {
 }
 
 fn glsl_main(pixel: Rgba<u8>) -> Rgba<u8> {
-    let mut color = vec3(pixel[0] as f64, pixel[1] as f64, pixel[2] as f64);
+    let mut color = vec3(pixel[0] as f64 / 255.0, pixel[1] as f64 / 255.0, pixel[2] as f64 / 255.0);
 
     let a = mat3(
         color.x, color.y, color.z, color.x, color.y, color.z, color.x, color.y, color.z,
