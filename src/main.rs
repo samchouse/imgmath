@@ -1,24 +1,34 @@
-use image;
+use image::{self, Rgba};
 use nalgebra_glm::*;
 
 fn main() {
     let mut img = image::open("./input.png").unwrap().to_rgba8();
 
     img.pixels_mut().for_each(|pixel| {
-        let mut color = vec3(pixel[0] as f64, pixel[1] as f64, pixel[2] as f64);
-
-        let a = mat3(
-            color[0], color[1], color[2], color[0], color[1], color[2], color[0], color[1],
-            color[2],
-        ) * color_temp_to_rgb(4000.0);
-        color = mix(&color, &a, 1.0);
-
-        let out = vec4(color[0], color[1], color[2], pixel[3] as f64);
-
-        pixel.0 = image::Rgba([out[0] as u8, out[0] as u8, out[0] as u8, out[0] as u8]).0;
+        *pixel = glsl_main(*pixel);
     });
 
     img.save("out.png").unwrap();
+}
+
+fn glsl_main(pixel: Rgba<u8>) -> Rgba<u8> {
+    let mut color = vec3(pixel[0] as f64, pixel[1] as f64, pixel[2] as f64);
+
+    let a = mat3(
+        color.x, color.y, color.z, color.x, color.y, color.z, color.x, color.y, color.z,
+    ) * color_temp_to_rgb(4000.0);
+    color = mix(&color, &a, 1.0);
+
+    let out = vec4(
+        color.x * 255.0,
+        color.y * 255.0,
+        color.z * 255.0,
+        pixel[3] as f64,
+    );
+
+    // println!("{:?}", out);
+
+    image::Rgba([out.x as u8, out.y as u8, out.z as u8, 255])
 }
 
 fn color_temp_to_rgb(temperature: f64) -> TVec3<f64> {
@@ -36,9 +46,9 @@ fn color_temp_to_rgb(temperature: f64) -> TVec3<f64> {
 
     let a = clamp_scalar(temperature, 1000.0, 40000.0);
     let b = vec3(a, a, a);
-    let c = b + vec3(m[1], m[1], m[1]);
-    let d = vec3(m[0], m[0], m[0]).component_div(&c);
-    let e = d + vec3(m[2], m[2], m[2]);
+    let c = b + vec3(m.m21, m.m22, m.m23);
+    let d = vec3(m.m11, m.m12, m.m13).component_div(&c);
+    let e = d + vec3(m.m31, m.m32, m.m33);
     let f = clamp_vec(&e, &vec3(0.0, 0.0, 0.0), &vec3(1.0, 1.0, 1.0));
 
     mix(
