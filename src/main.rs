@@ -1,8 +1,6 @@
 use clap::{Parser, Subcommand};
-use image;
-use shaders::{blue_light_filter::BlueLightFilter, Shader};
 
-mod shaders;
+use imgmath::shaders::{blue_light_filter::BlueLightFilter, Shader};
 
 #[derive(Parser)]
 #[command(version, about)]
@@ -40,23 +38,11 @@ enum ReverseCommand {
 
 fn main() {
     let args = Cli::parse();
-
-    let mut img = image::open(args.input).unwrap().to_rgba8();
     match args.command {
         Command::Reverse { command } => match command {
             ReverseCommand::BlueLightFilter { temperature } => {
-                let shader = BlueLightFilter::new(temperature);
-                img.pixels_mut().for_each(|pixel| {
-                    let reversed_pixel = shader.reverse([pixel[0], pixel[1], pixel[2]]);
-                    *pixel = image::Rgba([
-                        reversed_pixel[0],
-                        reversed_pixel[1],
-                        reversed_pixel[2],
-                        pixel[3],
-                    ]);
-                });
+                BlueLightFilter::new(temperature).reverse_on_file(&args.input, &args.output);
             }
         },
     }
-    img.save(args.output).unwrap();
 }

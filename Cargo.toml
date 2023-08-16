@@ -3,9 +3,21 @@ name = "imgmath"
 version = "0.1.0"
 description = "Run some math on images"
 authors = ["Samuel Corsi-House <chouse.samuel@gmail.com>"]
+default-run = "imgmath"
 edition = "2021"
+
+[lib]
+crate-type = ["lib", "cdylib"]
+
+[[bin]]
+name = "generate-headers"
+required-features = ["headers"]
+
+[features]
+headers = ["safer-ffi/headers"]
 
 [dependencies]
 clap = { version = "4.3.21", features = ["derive"] }
 image = "0.24.7"
 nalgebra-glm = "0.18.0"
+safer-ffi = "0.1.2"

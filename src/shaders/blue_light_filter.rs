@@ -1,4 +1,5 @@
 use nalgebra_glm::*;
+use safer_ffi::ffi_export;
 
 use super::Shader;
 
@@ -8,9 +9,7 @@ pub struct BlueLightFilter {
 
 impl BlueLightFilter {
     pub fn new(temperature: f64) -> Self {
-        Self {
-            temperature,
-        }
+        Self { temperature }
     }
 
     fn color_temperature_to_rgb(&self) -> TVec3<f64> {
@@ -60,4 +59,10 @@ impl Shader for BlueLightFilter {
             (color.z * 255.0) as u8,
         ]
     }
+}
+
+#[ffi_export]
+pub fn blue_light_filter(temperature: f64, input: *const libc::c_char, output: *const libc::c_char) {
+    println!("Blue Light Filter {:#?} {:#?}", &input, &output);
+    // BlueLightFilter::new(temperature).reverse_on_file(&input, &output);
 }

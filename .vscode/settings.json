@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "Justfile": "makefile",
+    "*.secrets": "dotenv",
+    "stddef.h": "c"
+  }
+}
