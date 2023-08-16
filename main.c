@@ -7,7 +7,7 @@ int main(void)
   // Create a string with value asd
   char *str = "asd";
 
-  blue_light_filter(4000.0, str, str);
+  blue_light_filter(4000.0, "sdfsd", "sdfsd");
 
   return 0;
 }

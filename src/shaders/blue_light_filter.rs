@@ -1,3 +1,5 @@
+use std::ffi::CStr;
+
 use nalgebra_glm::*;
 use safer_ffi::ffi_export;
 
@@ -63,6 +65,15 @@ impl Shader for BlueLightFilter {
 
 #[ffi_export]
 pub fn blue_light_filter(temperature: f64, input: *const libc::c_char, output: *const libc::c_char) {
-    println!("Blue Light Filter {:#?} {:#?}", &input, &output);
+    let c_str = unsafe {
+        assert!(!input.is_null());
+
+        CStr::from_ptr(input)
+    };
+
+    let r_str = c_str.to_str().unwrap();
+    println!("Blue Light Filter {:#?}", &r_str);
+
+    // println!("Blue Light Filter {:#?} {:#?}", &input, &output);
     // BlueLightFilter::new(temperature).reverse_on_file(&input, &output);
 }

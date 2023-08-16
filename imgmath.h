@@ -10,20 +10,19 @@
 #ifndef __RUST_IMGMATH__
 #define __RUST_IMGMATH__
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
-
 
 #include <stddef.h>
 #include <stdint.h>
 
-/** <No documentation available> */
-void
-blue_light_filter (
-    double temperature,
-    uint8_t const * input,
-    uint8_t const * output);
-
+    /** <No documentation available> */
+    void
+    blue_light_filter(
+        double temperature,
+        const char *input,
+        const char *output);
 
 #ifdef __cplusplus
 } /* extern \"C\" */
