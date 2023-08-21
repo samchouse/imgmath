@@ -7,7 +7,9 @@ int main(void)
   // Create a string with value asd
   char *str = "asd";
 
-  blue_light_filter(4000.0, "sdfsd", "sdfsd");
+  char *output = blue_light_filter(4000.0, "a.png");
+  printf("%s\n", output);
+  rust_free_string(output);
 
   return 0;
 }

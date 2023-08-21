@@ -440,7 +440,6 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "image",
- "libc",
  "nalgebra-glm",
  "safer-ffi",
 ]
