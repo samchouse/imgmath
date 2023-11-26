@@ -1,6 +1,8 @@
 use clap::{Parser, Subcommand};
 
-use imgmath::shaders::{blue_light_filter::BlueLightFilter, Shader};
+use crate::shaders::{blue_light_filter::BlueLightFilter, Shader};
+
+mod shaders;
 
 #[derive(Parser)]
 #[command(version, about)]

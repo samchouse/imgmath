@@ -1,4 +1,3 @@
-use ::safer_ffi::prelude::*;
 use nalgebra_glm::*;
 
 use super::Shader;
@@ -59,18 +58,4 @@ impl Shader for BlueLightFilter {
             (color.z * 255.0) as u8,
         ]
     }
-}
-
-#[ffi_export]
-pub fn blue_light_filter(temperature: f64, input: char_p::Ref<'_>) -> char_p::Box {
-    let input = input.to_str();
-
-    BlueLightFilter::new(temperature).reverse_on_file(&input, "test.png");
-
-    "test.png".to_string().try_into().unwrap()
-}
-
-#[ffi_export]
-fn rust_free_string(string: char_p::Box) {
-    drop(string)
 }
